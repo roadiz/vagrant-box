@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "forwarded_port", guest: 8983, host: 8983, auto_correct: true # Solr
     config.vm.network "forwarded_port", guest: 1080, host: 1080, auto_correct: true # Mailcatcher
 
-    config.vm.synced_folder './', '/vagrant', disabled: true
+    config.vm.synced_folder './', '/vagrant'
 
     config.vm.provider "virtualbox" do |vb|
         vb.customize ['modifyvm', :id, '--memory', '1024']
