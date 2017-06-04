@@ -14,9 +14,20 @@ sudo apt-get -qq update;
 
 echo -e "\n--- Install base packages ---\n"
 sudo locale-gen fr_FR.utf8;
+# Signing key for MariaDB
+# @see https://mariadb.com/kb/en/mariadb/installing-mariadb-deb-files/
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db;
 
 echo -e "\n--- Add some repos to update our distro ---\n"
 LC_ALL=C.UTF-8 sudo add-apt-repository ppa:ondrej/php > /dev/null 2>&1;
+if [ $? -eq 0 ]; then
+   echo -e "\t--- OK\n"
+else
+   echo -e "${RED}\t!!! FAIL${NC}\n"
+   echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
+   exit 1;
+fi
+LC_ALL=C.UTF-8 sudo add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.2/ubuntu trusty main' > /dev/null 2>&1;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -42,8 +53,8 @@ sudo apt-get -qq update;
 sudo apt-get -qq -y upgrade > /dev/null 2>&1;
 
 echo -e "\n--- Install MySQL specific packages and settings ---\n"
-sudo debconf-set-selections <<< "mariadb-server-10.0 mysql-server/root_password password $DBPASSWD"
-sudo debconf-set-selections <<< "mariadb-server-10.0 mysql-server/root_password_again password $DBPASSWD"
+sudo debconf-set-selections <<< "mariadb-server-10.2 mysql-server/root_password password $DBPASSWD"
+sudo debconf-set-selections <<< "mariadb-server-10.2 mysql-server/root_password_again password $DBPASSWD"
 
 echo -e "\n--- Install base servers and packages ---\n"
 sudo apt-get -qq -f -y install git nano zip nginx mariadb-server mariadb-client curl > /dev/null 2>&1;
