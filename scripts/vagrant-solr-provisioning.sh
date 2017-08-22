@@ -75,6 +75,8 @@ fi
 echo -e "\n--- Restarting Solr server ---\n"
 sudo service solr restart > /dev/null 2>&1;
 
+sudo rm -rf ~/$SOLR_VERSION.tgz ~/install_solr_service.sh;
+
 export PRIVATE_IP=`/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 
 echo -e "\n-----------------------------------------------------------"
