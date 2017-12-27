@@ -5,7 +5,7 @@ Based on `ubuntu/trusty64`.
 This box provides:
 
 - NGinx
-- PHP7.1-FPM
+- PHP7.2-FPM
 - MariaDB
 - Apache Solr
 - Composer

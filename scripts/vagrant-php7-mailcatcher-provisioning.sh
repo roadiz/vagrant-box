@@ -31,11 +31,11 @@ sudo sh -c "echo '@reboot root $(which mailcatcher) --ip=0.0.0.0' >> /etc/cronta
 sudo update-rc.d cron defaults > /dev/null 2>&1;
 
 echo -e "\n--- Setup MailCatcher catchmail service as PHP sendmail_path ---\n";
-sudo sh -c "echo 'sendmail_path = /usr/bin/env $(which catchmail)' >> /etc/php/7.1/mods-available/mailcatcher.ini";
+sudo sh -c "echo 'sendmail_path = /usr/bin/env $(which catchmail)' >> /etc/php/7.2/mods-available/mailcatcher.ini";
 sudo phpenmod -v ALL -s ALL mailcatcher;
 
 echo -e "\n--- Restart PHP service ---\n";
-sudo service php7.0-fpm restart > /dev/null 2>&1;
+sudo service php7.2-fpm restart > /dev/null 2>&1;
 
 echo -e "\n--- Run MailCatcher  ---\n";
 /usr/bin/env $(which mailcatcher) --ip=0.0.0.0 > /dev/null 2>&1;
