@@ -4,15 +4,11 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 export DEBIAN_FRONTEND=noninteractive
 
-# Latest Xenial box uses "ubuntu" default user instead of "vagrant"
-# https://bugs.launchpad.net/cloud-images/+bug/1569237
-USER="ubuntu"
-
 # Apache Solr
 SOLR_VERSION="7.2.0"
 SOLR_MIRROR="http://archive.apache.org/dist"
-SOLR_ARCHIVE="/home/ubuntu/solr-${SOLR_VERSION}.tgz"
-SOLR_INSTALL_SCRIPT="/home/ubuntu/install_solr_service.sh"
+SOLR_ARCHIVE="/home/vagrant/solr-${SOLR_VERSION}.tgz"
+SOLR_INSTALL_SCRIPT="/home/vagrant/install_solr_service.sh"
 SOLR_DOWNLOAD_URI="${SOLR_MIRROR}/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz"
 
 echo -e "\n--- Installing Oracle JDK 8 dependencies and repository ---\n"

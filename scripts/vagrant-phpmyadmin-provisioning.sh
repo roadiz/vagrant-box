@@ -4,12 +4,9 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 export DEBIAN_FRONTEND=noninteractive
 
-# Latest Xenial box uses "ubuntu" default user instead of "vagrant"
-# https://bugs.launchpad.net/cloud-images/+bug/1569237
-USER="ubuntu"
 DBPASSWD="roadiz"
 
-TEMP_DIR="/home/${USER}"
+TEMP_DIR="/home/vagrant"
 PHPMYADMIN_DIR="/usr/share/phpmyadmin"
 PHPMYADMIN_VERSION="4.7.7"
 PHPMYADMIN_ARCHIVE="phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages"
@@ -34,7 +31,6 @@ sudo mv ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE} ${PHPMYADMIN_DIR};
 
 echo -e "\n--- Configure phpmyadmin to connect automatically for roadiz DB\n"
 sudo cp -a /vagrant/scripts/vagrant/phpmyadmin/config.inc.php ${PHPMYADMIN_DIR}/config.inc.php;
-
 
 export PRIVATE_IP=`/sbin/ifconfig enp0s3 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 

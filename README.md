@@ -1,6 +1,6 @@
 # Vagrant box for Roadiz standard-edition development
 
-Based on `ubuntu/xenial64`.
+Based on `bento/ubuntu-16.04`.
 
 This box provides:
 

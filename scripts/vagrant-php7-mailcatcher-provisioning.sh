@@ -2,9 +2,6 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Latest Xenial box uses "ubuntu" default user instead of "vagrant"
-# https://bugs.launchpad.net/cloud-images/+bug/1569237
-USER="ubuntu"
 export DEBIAN_FRONTEND=noninteractive;
 
 echo -e "\n--- Install MailCatcher dependencies ---\n";

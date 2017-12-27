@@ -4,9 +4,6 @@ export DEBIAN_FRONTEND=noninteractive
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Latest Xenial box uses "ubuntu" default user instead of "vagrant"
-# https://bugs.launchpad.net/cloud-images/+bug/1569237
-USER="ubuntu"
 DBHOST="localhost"
 DBNAME="roadiz"
 DBUSER="roadiz"

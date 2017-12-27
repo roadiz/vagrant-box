@@ -3,7 +3,7 @@ VAGRANTFILE_API_VERSION = '2'
 require 'date'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.box = "ubuntu/xenial64"
+    config.vm.box = "bento/ubuntu-16.04"
     config.vm.hostname = "roadiz-se-" + Time.now.strftime("%Y%m%d")
     #
     # Use forwarded ports with your local network
@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "mailcatcher", type: :shell, path: "scripts/vagrant-php7-mailcatcher-provisioning.sh"
     config.vm.provision "solr",        type: :shell, path: "scripts/vagrant-solr-provisioning.sh"
     config.vm.provision "devtools",    type: :shell, path: "scripts/vagrant-devtools-provisioning.sh"
+    config.vm.provision "purge",       type: :shell, path: "scripts/vagrant-purge.sh"
 
     config.push.define "atlas" do |push|
         push.app = "roadiz/standard-edition"
