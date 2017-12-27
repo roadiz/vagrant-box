@@ -11,8 +11,8 @@ USER="ubuntu"
 # Apache Solr
 SOLR_VERSION="7.2.0"
 SOLR_MIRROR="http://archive.apache.org/dist"
-SOLR_ARCHIVE="~/solr-${SOLR_VERSION}.tgz"
-SOLR_INSTALL_SCRIPT="~/install_solr_service.sh"
+SOLR_ARCHIVE="/home/ubuntu/solr-${SOLR_VERSION}.tgz"
+SOLR_INSTALL_SCRIPT="/home/ubuntu/install_solr_service.sh"
 SOLR_DOWNLOAD_URI="${SOLR_MIRROR}/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz"
 
 echo -e "\n--- Installing Oracle JDK 8 dependencies and repository ---\n"
@@ -48,10 +48,10 @@ else
    exit 1;
 fi
 
-echo -e "\n--- Extracting Apache Solr installer script\n"
+echo -e "\n--- Extracting Apache Solr installer script\n";
 tar xzf $SOLR_ARCHIVE solr-$SOLR_VERSION/bin/install_solr_service.sh --strip-components=2;
 
-echo -e "\n--- Installing Apache Solr\n"
+echo -e "\n--- Installing Apache Solr\n";
 sudo bash ${SOLR_INSTALL_SCRIPT} ${SOLR_ARCHIVE};
 
 echo -e "\n--- Create a new Solr core called \"roadiz\"\n"

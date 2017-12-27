@@ -1,13 +1,13 @@
 # Vagrant box for Roadiz standard-edition development
 
-Based on `ubuntu/trusty64`.
+Based on `ubuntu/xenial64`.
 
 This box provides:
 
-- NGinx
-- PHP7.2-FPM
-- MariaDB
-- Apache Solr
+- Nginx
+- php7.2-fpm
+- MariaDB, with 2 databases `roadiz` and `roadiz_test` using *utf8mb4* character set
+- Apache Solr, with one core `roadiz`
 - Composer
 - NPM
 - Yarn
