@@ -13,20 +13,7 @@ echo -e "\n--- Installing NodeJS and NPM ---\n"
 sudo apt-get -y install nodejs;
 
 echo -e "\n--- Installing Composer for PHP package management ---\n"
-EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
-if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]
-then
-    >&2 echo 'ERROR: Invalid installer signature'
-    rm composer-setup.php
-    exit 1
-fi
-php composer-setup.php --quiet
-RESULT=$?
-rm composer-setup.php
-
-sudo mv composer.phar /usr/local/bin/composer
+php -r "readfile('https://getcomposer.org/installer');" | sudo php -- --install-dir='/usr/bin' --filename=composer
 
 echo -e "\n--- Installing Yarn as better alternative for NPM ---\n"
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
