@@ -2,3 +2,4 @@
 ### Vagrant ###
 .vagrant/
 /package.box
+/*.log

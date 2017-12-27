@@ -1,8 +1,10 @@
 VAGRANTFILE_API_VERSION = '2'
 
+require 'date'
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/xenial64"
-    config.vm.hostname = "roadiz"
+    config.vm.hostname = "roadiz-se-" + Time.now.strftime("%Y%m%d")
     #
     # Use forwarded ports with your local network
     # Be careful to change port if you want to run multiple
@@ -28,6 +30,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "devtools",    type: :shell, path: "scripts/vagrant-devtools-provisioning.sh"
 
     config.push.define "atlas" do |push|
-      push.app = "roadiz/standard-edition"
+        push.app = "roadiz/standard-edition"
     end
 end

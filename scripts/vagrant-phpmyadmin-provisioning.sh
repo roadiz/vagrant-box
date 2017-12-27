@@ -4,16 +4,19 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 export DEBIAN_FRONTEND=noninteractive
 
+# Latest Xenial box uses "ubuntu" default user instead of "vagrant"
+# https://bugs.launchpad.net/cloud-images/+bug/1569237
+USER="ubuntu"
 DBPASSWD="roadiz"
 
-TEMP_DIR="/home/vagrant"
+TEMP_DIR="/home/${USER}"
 PHPMYADMIN_DIR="/usr/share/phpmyadmin"
 PHPMYADMIN_VERSION="4.7.7"
 PHPMYADMIN_ARCHIVE="phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages"
 PHPMYADMIN_ARCHIVE_URL="https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/${PHPMYADMIN_ARCHIVE}.tar.gz"
 
 echo -e "\n--- Downloading phpmyadmin...\n"
-sudo wget -O ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE}.tar.gz ${PHPMYADMIN_ARCHIVE_URL} > /dev/null 2>&1;
+sudo wget -O ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE}.tar.gz ${PHPMYADMIN_ARCHIVE_URL};
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -23,17 +26,17 @@ else
 fi
 
 echo -e "\n--- Uncompressing phpmyadmin...\n"
-sudo tar -xzvf ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE}.tar.gz > /dev/null 2>&1;
+sudo tar -xzvf ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE}.tar.gz;
 sudo rm -rf ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE}.tar.gz;
 
 echo -e "\n--- Installing phpmyadmin...\n"
-sudo mv ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE} ${PHPMYADMIN_DIR} > /dev/null 2>&1;
+sudo mv ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE} ${PHPMYADMIN_DIR};
 
 echo -e "\n--- Configure phpmyadmin to connect automatically for roadiz DB\n"
 sudo cp -a /vagrant/scripts/vagrant/phpmyadmin/config.inc.php ${PHPMYADMIN_DIR}/config.inc.php;
 
 
-export PRIVATE_IP=`/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
+export PRIVATE_IP=`/sbin/ifconfig enp0s3 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 
 echo -e "\n-----------------------------------------------------------------"
 echo -e "\n------------------- Your phpmyadmin is ready --------------------"
