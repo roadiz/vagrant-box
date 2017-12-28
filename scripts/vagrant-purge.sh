@@ -37,7 +37,7 @@ sudo dpkg --list \
 
 # Do not Delete X11 libraries
 # required for php7.2-gd
-# sudo apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6;
+sudo apt-get -y purge xauth libxmuu1 libxext6;
 
 # Delete obsolete networking
 sudo apt-get -y purge ppp pppconfig pppoeconf;

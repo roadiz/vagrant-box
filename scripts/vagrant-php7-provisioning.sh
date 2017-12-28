@@ -14,8 +14,6 @@ sudo apt-get -qq update;
 sudo apt-get -qq -y install build-essential software-properties-common;
 
 echo -e "\n--- Install base packages ---\n"
-sudo locale-gen fr_FR.utf8;
-sudo locale-gen en_US.utf8;
 # Signing key for MariaDB
 # @see https://mariadb.com/kb/en/mariadb/installing-mariadb-deb-files/
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
@@ -117,20 +115,6 @@ sudo cp /vagrant/scripts/vagrant/nginx-conf.conf /etc/nginx/nginx.conf;
 sudo cp /vagrant/scripts/vagrant/nginx-vhost.conf /etc/nginx/sites-available/default;
 sudo cp /vagrant/scripts/vagrant/roadiz-nginx-include.conf /etc/nginx/snippets/roadiz.conf;
 
-#
-# Do not generate default DH param and certificate
-# to speed up Vagrant provisioning
-#
-
-#echo -e "\n--- Generating a unique Diffie-Hellman Group ---\n"
-#sudo openssl dhparam -out /etc/nginx/certs/default.dhparam.pem 2048 > /dev/null 2>&1;
-#
-#echo -e "\n--- Generating a self-signed SSL certificate ---\n"
-#sudo openssl req -new -newkey rsa:2048 -days 365 -nodes \
-#            -x509 -subj "/C=FR/ST=Rhonealpes/L=Lyon/O=ACME/CN=localhost" \
-#            -keyout /etc/nginx/certs/default.key \
-#            -out /etc/nginx/certs/default.crt > /dev/null 2>&1;
-
 echo -e "\n--- Configure PHP-FPM default pool ---\n"
 sudo rm /etc/php/7.2/fpm/pool.d/www.conf;
 sudo cp /vagrant/scripts/vagrant/php-pool.conf /etc/php/7.2/fpm/pool.d/www.conf;
@@ -146,29 +130,9 @@ sudo usermod -aG www-data ${USER};
 sudo service nginx restart > /dev/null 2>&1;
 sudo service php7.2-fpm restart > /dev/null 2>&1;
 
-##### CLEAN UP #####
-echo -e "\n--- Clean up ---\n"
-sudo dpkg --configure -a; # when upgrade or install doesn't run well (e.g. loss of connection) this may resolve quite a few issues
-sudo apt-get autoremove -y; # remove obsolete packages
-
 # Set envvars
 export DB_HOST=$DBHOST
 export DB_NAME=$DBNAME
 export DB_USER=$DBUSER
 export DB_PASS=$DBPASSWD
 
-export PRIVATE_IP=`/sbin/ifconfig enp0s3 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
-
-echo -e "\n-----------------------------------------------------------------"
-echo -e "\n----------- Your Roadiz Vagrant is ready in /var/www ------------"
-echo -e "\n-----------------------------------------------------------------"
-echo -e "\nDo not forget to \"composer install\" and to add "
-echo -e "\nyour host IP into install.php and dev.php"
-echo -e "\nto get allowed in install and dev entry-points."
-echo -e "\n* Type http://$PRIVATE_IP/install.php to proceed to install."
-#echo -e "\n* Type https://$PRIVATE_IP/install.php to proceed using SSL (cert is not authenticated)."
-echo -e "\n* MySQL User: $DBUSER"
-echo -e "\n* MySQL Password: $DBPASSWD"
-echo -e "\n* MySQL Database: $DBNAME"
-echo -e "\n* MySQL Database for tests: ${DBNAME}_test"
-echo -e "\n-----------------------------------------------------------------"

@@ -25,3 +25,21 @@ vagrant up && vagrant package --output package.box;
 # Test locally before pushing to Vagrant cloud
 vagrant box add roadiz-standard-edition-x.y.z package.box
 ```
+
+### MariaDB access
+
+- Host: `localhost`
+- Databases: `roadiz` or `roadiz_test`
+- User: `roadiz`
+- Pass: `roadiz`
+
+### Solr access
+
+- Host: `localhost`
+- Port: 8983
+- User/Pass: *none*
+
+### Mailcatcher access
+
+- Host: `localhost`
+- Port: 1080

@@ -31,11 +31,3 @@ sudo mv ${TEMP_DIR}/${PHPMYADMIN_ARCHIVE} ${PHPMYADMIN_DIR};
 
 echo -e "\n--- Configure phpmyadmin to connect automatically for roadiz DB\n"
 sudo cp -a /vagrant/scripts/vagrant/phpmyadmin/config.inc.php ${PHPMYADMIN_DIR}/config.inc.php;
-
-export PRIVATE_IP=`/sbin/ifconfig enp0s3 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
-
-echo -e "\n-----------------------------------------------------------------"
-echo -e "\n------------------- Your phpmyadmin is ready --------------------"
-echo -e "\n-----------------------------------------------------------------"
-echo -e "\n* Type http://$PRIVATE_IP/phpmyadmin for your MySQL db admin."
-echo -e "\n-----------------------------------------------------------------"

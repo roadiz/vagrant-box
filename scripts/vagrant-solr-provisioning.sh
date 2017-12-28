@@ -77,10 +77,3 @@ sudo service solr restart > /dev/null 2>&1;
 
 echo -e "\n--- Removing installer and archive ---\n"
 sudo rm -rf ${SOLR_ARCHIVE} ${SOLR_INSTALL_SCRIPT};
-
-export PRIVATE_IP=`/sbin/ifconfig enp0s3 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
-
-echo -e "\n-----------------------------------------------------------"
-echo -e "\n---------------- Your Solr server is ready ----------------"
-echo -e "\n* Type http://$PRIVATE_IP:8983/solr to use Apache Solr admin."
-echo -e "\n-----------------------------------------------------------"
