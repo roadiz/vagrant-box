@@ -8,11 +8,14 @@ This box provides:
 - php7.2-fpm
 - MariaDB, with 2 databases `roadiz` and `roadiz_test` using *utf8mb4* character set
 - Apache Solr, with one core `roadiz`
+- PhpMyAdmin
+- Mailcatcher
+
+## Optional devtools
+
 - Composer
 - NPM
 - Yarn
-- PhpMyAdmin
-- Mailcatcher
 
 ## Usage
 
