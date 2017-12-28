@@ -72,7 +72,7 @@ echo -e "\n--- Install all php7.2 extensions ---\n"
 sudo apt-get -qq -y install php7.2 php7.2-cli php7.2-fpm php7.2-common php7.2-opcache php7.2-cli php7.2-mysql  \
                                php7.2-xml php7.2-gd php7.2-intl php7.2-imap php-mcrypt php7.2-pspell \
                                php7.2-curl php7.2-recode php7.2-sqlite3 php7.2-mbstring php7.2-tidy \
-                               php7.2-xsl php-apcu php7.2-gd php-apcu-bc php7.2-zip;
+                               php7.2-xsl php-apcu php-apcu-bc php7.2-zip;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
