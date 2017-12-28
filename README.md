@@ -21,7 +21,17 @@ This box provides:
 
 ```shell
 vagrant login;
-vagrant up && vagrant package --output package.box;
+vagrant up;
+
+# Remove empty space to maximum compression during packaging
+vagrant ssh;
+
+sudo dd if=/dev/zero of=/EMPTY bs=1M;
+sudo rm -f /EMPTY;
+exit;
+
+# Create your package
+vagrant package --output package.box;
 # Test locally before pushing to Vagrant cloud
 vagrant box add roadiz-standard-edition-x.y.z package.box
 ```
