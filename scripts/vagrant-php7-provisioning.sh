@@ -9,6 +9,8 @@ DBNAME="roadiz"
 DBUSER="roadiz"
 DBPASSWD="roadiz"
 
+MARIADB_VERSION="10.3"
+
 echo -e "\n--- Okay, installing now... ---\n"
 sudo apt-get -qq update;
 sudo apt-get -qq -y install build-essential software-properties-common;
@@ -27,7 +29,7 @@ else
    echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
    exit 1;
 fi
-LC_ALL=C.UTF-8 sudo add-apt-repository 'deb http://ftp.utexas.edu/mariadb/repo/10.2/ubuntu xenial main' > /dev/null 2>&1;
+LC_ALL=C.UTF-8 sudo add-apt-repository "deb http://ftp.utexas.edu/mariadb/repo/${MARIADB_VERSION}/ubuntu xenial main" > /dev/null 2>&1;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -53,8 +55,8 @@ sudo apt-get -qq update;
 sudo apt-get -qq -y upgrade > /dev/null 2>&1;
 
 echo -e "\n--- Install MySQL specific packages and settings ---\n"
-sudo debconf-set-selections <<< "mariadb-server-10.2 mysql-server/root_password password $DBPASSWD"
-sudo debconf-set-selections <<< "mariadb-server-10.2 mysql-server/root_password_again password $DBPASSWD"
+sudo debconf-set-selections <<< "mariadb-server-${MARIADB_VERSION} mysql-server/root_password password $DBPASSWD"
+sudo debconf-set-selections <<< "mariadb-server-${MARIADB_VERSION} mysql-server/root_password_again password $DBPASSWD"
 
 echo -e "\n--- Install base servers and packages ---\n"
 sudo apt-get -qq -y install git htop nano zsh zip nginx mariadb-server mariadb-client curl;
@@ -68,8 +70,8 @@ fi
 
 echo -e "\n--- Install all php7.2 extensions ---\n"
 sudo apt-get -qq -y install php7.2 php7.2-cli php7.2-fpm php7.2-common php7.2-opcache php7.2-cli php7.2-mysql  \
-                               php7.2-xml php7.2-gd php7.2-intl php7.2-imap php-mcrypt php7.2-pspell \
-                               php7.2-curl php7.2-recode php7.2-sqlite3 php7.2-mbstring php7.2-tidy \
+                               php7.2-xml php7.2-gd php7.2-intl php7.2-imap php-mcrypt \
+                               php7.2-curl php7.2-sqlite3 php7.2-mbstring php7.2-tidy \
                                php7.2-xsl php-apcu php-apcu-bc php7.2-zip php-xdebug;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
