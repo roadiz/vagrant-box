@@ -1,5 +1,4 @@
 VAGRANTFILE_API_VERSION = '2'
-
 require 'date'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -29,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "phpmyadmin",  type: :shell, path: "scripts/vagrant-phpmyadmin-provisioning.sh"
     config.vm.provision "mailcatcher", type: :shell, path: "scripts/vagrant-php7-mailcatcher-provisioning.sh"
     config.vm.provision "solr",        type: :shell, path: "scripts/vagrant-solr-provisioning.sh"
-    #config.vm.provision "devtools",    type: :shell, path: "scripts/vagrant-devtools-provisioning.sh"
+    config.vm.provision "devtools",    type: :shell, path: "scripts/vagrant-devtools-provisioning.sh"
     config.vm.provision "purge",       type: :shell, path: "scripts/vagrant-purge.sh"
 
     config.push.define "atlas" do |push|

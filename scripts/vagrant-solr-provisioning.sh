@@ -5,7 +5,7 @@ NC='\033[0m' # No Color
 export DEBIAN_FRONTEND=noninteractive
 
 # Apache Solr
-SOLR_VERSION="7.2.0"
+SOLR_VERSION="7.2.1"
 SOLR_MIRROR="http://archive.apache.org/dist"
 SOLR_ARCHIVE="/home/vagrant/solr-${SOLR_VERSION}.tgz"
 SOLR_INSTALL_SCRIPT="/home/vagrant/install_solr_service.sh"
