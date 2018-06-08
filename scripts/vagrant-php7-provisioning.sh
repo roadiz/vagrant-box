@@ -13,7 +13,15 @@ MARIADB_VERSION="10.3"
 
 echo -e "\n--- Okay, installing now... ---\n"
 sudo apt-get -qq update;
-sudo apt-get -qq -y install build-essential software-properties-common;
+sudo apt-get -qq -y install build-essential zsh curl software-properties-common;
+
+echo -e "\n---Install oh-my-zsh ---\n"
+sudo chsh -s /usr/bin/zsh vagrant;
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)";
+sudo cp -a /root/.oh-my-zsh /home/vagrant/;
+sudo cp -a /root/.zshrc /home/vagrant/;
+sudo sed -i.bak 's/\/root\//\$HOME\//g' /home/vagrant/.zshrc;
+sudo chown -R vagrant:vagrant /home/vagrant;
 
 echo -e "\n--- Install base packages ---\n"
 # Signing key for MariaDB
@@ -29,7 +37,7 @@ else
    echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
    exit 1;
 fi
-LC_ALL=C.UTF-8 sudo add-apt-repository "deb http://ftp.utexas.edu/mariadb/repo/${MARIADB_VERSION}/ubuntu xenial main" > /dev/null 2>&1;
+LC_ALL=C.UTF-8 sudo add-apt-repository "deb [arch=amd64,i386,ppc64el] http://ftp.igh.cnrs.fr/pub/mariadb/repo/${MARIADB_VERSION}/ubuntu xenial main" > /dev/null 2>&1;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -37,7 +45,6 @@ else
    echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
    exit 1;
 fi
-
 
 # Use latest nginx for HTTP/2
 sudo cp -a /vagrant/scripts/vagrant/sources.list.d/nginx.list /etc/apt/sources.list.d/nginx.list;
@@ -52,14 +59,13 @@ fi
 
 echo -e "\n--- Updating packages list ---\n"
 sudo apt-get -qq update;
-sudo apt-get -qq -y upgrade > /dev/null 2>&1;
 
 echo -e "\n--- Install MySQL specific packages and settings ---\n"
 sudo debconf-set-selections <<< "mariadb-server-${MARIADB_VERSION} mysql-server/root_password password $DBPASSWD"
 sudo debconf-set-selections <<< "mariadb-server-${MARIADB_VERSION} mysql-server/root_password_again password $DBPASSWD"
 
 echo -e "\n--- Install base servers and packages ---\n"
-sudo apt-get -qq -y install git htop nano zsh zip nginx mariadb-server mariadb-client curl;
+sudo apt-get -qq -y install git htop nano zsh zip nginx mariadb-server mariadb-client;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
