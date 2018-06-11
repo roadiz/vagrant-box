@@ -1,5 +1,6 @@
 # Vagrant box for Roadiz standard-edition development
 
+https://app.vagrantup.com/roadiz/boxes/standard-edition   
 Based on `bento/ubuntu-16.04`.
 
 This box provides:
@@ -21,17 +22,9 @@ This box provides:
 
 ```shell
 vagrant login;
-vagrant up;
 
-# Remove empty space to maximum compression during packaging
-vagrant ssh;
+make;
 
-sudo dd if=/dev/zero of=/EMPTY bs=1M;
-sudo rm -f /EMPTY;
-exit;
-
-# Create your package
-vagrant package --output package.box;
 # Test locally before pushing to Vagrant cloud
 vagrant box add roadiz-standard-edition-x.y.z package.box
 ```
@@ -46,6 +39,7 @@ vagrant box add roadiz-standard-edition-x.y.z package.box
 ### Solr access
 
 - Host: `localhost`
+- Core: `roadiz` and `roadiz_test`
 - Port: 8983
 - User/Pass: *none*
 
