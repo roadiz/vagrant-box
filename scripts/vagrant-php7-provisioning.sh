@@ -10,10 +10,23 @@ DBUSER="roadiz"
 DBPASSWD="roadiz"
 
 MARIADB_VERSION="10.3"
+VIRTUALBOX_VERSION="5.2.12"
 
 echo -e "\n--- Okay, installing now... ---\n"
 sudo apt-get -qq update;
-sudo apt-get -qq -y install build-essential zsh curl software-properties-common;
+sudo apt-get -qq -y install linux-headers-$(uname -r) build-essential dkms zsh curl software-properties-common;
+
+echo -e "\n---Install VBoxGuestAdditions ---\n"
+wget http://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso;
+sudo mkdir /media/VBoxGuestAdditions;
+sudo mount -o loop,ro VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso /media/VBoxGuestAdditions;
+sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run --nox11 -- --force;
+rm VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso;
+sudo umount /media/VBoxGuestAdditions;
+sudo rmdir /media/VBoxGuestAdditions;
+
+echo -e "\n---Install locales ---\n"
+sudo locale-gen en_GB.UTF-8 en_US.UTF-8 fr_FR.UTF-8 it_IT.UTF-8 es_ES.UTF-8 pt_PT.UTF-8 ru_RU.UTF-8 de_DE.UTF-8 tr_TR.UTF-8 ja_JP.UTF-8 zh_CN.UTF-8;
 
 echo -e "\n---Install oh-my-zsh ---\n"
 sudo chsh -s /usr/bin/zsh vagrant;
