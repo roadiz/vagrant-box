@@ -13,6 +13,8 @@ MARIADB_VERSION="10.3"
 VIRTUALBOX_VERSION="5.2.12"
 
 echo -e "\n--- Okay, installing now... ---\n"
+sudo systemctl disable apt-daily.service;
+sudo systemctl disable apt-daily.timer;
 sudo apt-get -qq update;
 sudo apt-get -qq -y install linux-headers-$(uname -r) build-essential dkms zsh curl software-properties-common;
 
