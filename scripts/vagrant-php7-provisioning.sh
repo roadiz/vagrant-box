@@ -10,7 +10,7 @@ DBUSER="roadiz"
 DBPASSWD="roadiz"
 
 MARIADB_VERSION="10.3"
-VIRTUALBOX_VERSION="5.2.12"
+VIRTUALBOX_VERSION="5.2.18"
 
 echo -e "\n--- Okay, installing now... ---\n"
 sudo systemctl disable apt-daily.service;
