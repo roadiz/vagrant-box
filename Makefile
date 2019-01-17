@@ -1,7 +1,6 @@
 #
 # Roadiz Vagrant box generation script
 #
-
 package.box :
 	# Check box is up to date
 	vagrant box update;
@@ -12,9 +11,13 @@ package.box :
 	# Create your package
 	vagrant package --output package.box;
 
-.PHONY : clean
+.PHONY : clean clean-logs
+
+clean-logs:
+	rm -rf ./*.log;
 
 # Delete generated assets
 clean :
 	rm -rf ./package.box;
+	rm -rf ./*.log;
 	vagrant destroy -f;

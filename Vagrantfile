@@ -3,6 +3,8 @@ require 'date'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/xenial64"
+    config.vm.box_check_update = false
+    config.vm.box_version = "20190115.0.0"
     config.vm.hostname = "roadiz-se-" + Time.now.strftime("%Y%m%d")
     #
     # Use forwarded ports with your local network
@@ -16,12 +18,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
-        vb.cpus = 4
+        vb.cpus = 2
         vb.customize ["modifyvm", :id, "--ioapic", "on"]
         vb.customize ['modifyvm', :id, '--memory', '2048']
+        vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
         vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
         vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
-        vb.customize ['modifyvm', :id, '--uartmode1', 'disconnected']
+        vb.customize ['modifyvm', :id, '--uartmode1', 'file', File.join(Dir.pwd, "vagrant.log")]
     end
 
     config.vm.provision "roadiz",      type: :shell, path: "scripts/vagrant-php7-provisioning.sh"
