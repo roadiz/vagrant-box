@@ -8,7 +8,7 @@ DBPASSWD="roadiz"
 
 TEMP_DIR="/home/vagrant"
 PHPMYADMIN_DIR="/usr/share/phpmyadmin"
-PHPMYADMIN_VERSION="4.8.3"
+PHPMYADMIN_VERSION="4.8.4"
 PHPMYADMIN_ARCHIVE="phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages"
 PHPMYADMIN_ARCHIVE_URL="https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/${PHPMYADMIN_ARCHIVE}.tar.gz"
 
