@@ -128,7 +128,7 @@ else
 fi
 
 echo -e "\n--- We definitly need to see the PHP errors, turning them on ---\n"
-sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.3/fpm/php.installing
+sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.3/fpm/php.ini
 sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.3/fpm/php.ini
 sudo sed -i "s/;realpath_cache_size = .*/realpath_cache_size = 4096k/" /etc/php/7.3/fpm/php.ini
 sudo sed -i "s/;realpath_cache_ttl = .*/realpath_cache_ttl = 600/" /etc/php/7.3/fpm/php.ini
@@ -157,6 +157,9 @@ sudo cp /vagrant/scripts/vagrant/opcache-recommended.ini /etc/php/7.3/mods-avail
 sudo phpenmod -v 7.3 -s ALL opcache-recommended;
 sudo phpenmod -v 7.3 -s ALL logs;
 #sudo phpenmod -v 7.3 -s ALL xdebug;
+
+# XDebug for 7.3 is still in beta and makes SEGFAULT
+sudo phpdismod -v 7.3 -s ALL xdebug;
 
 echo -e "\n--- Restarting Nginx and PHP servers ---\n"
 sudo usermod -aG www-data ${USER};

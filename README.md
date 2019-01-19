@@ -27,6 +27,7 @@ make;
 
 # Test locally before pushing to Vagrant cloud
 vagrant box add roadiz-standard-edition-x.y.z package.box
+vagrant box add roadiz-standard-edition-no-solr-x.y.z package_no_solr.box
 ```
 
 ### MariaDB access
