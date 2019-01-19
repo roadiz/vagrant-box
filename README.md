@@ -6,7 +6,7 @@ Based on `ubuntu/xenial64`.
 This box provides:
 
 - Nginx
-- php7.2-fpm
+- php7.3-fpm
 - MariaDB, with 2 databases `roadiz` and `roadiz_test` using *utf8mb4* character set
 - Apache Solr, with one core `roadiz`
 - PhpMyAdmin

@@ -2,9 +2,9 @@ VAGRANTFILE_API_VERSION = '2'
 require 'date'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.box = "ubuntu/xenial64"
+    config.vm.box = "bento/ubuntu-16.04"
     config.vm.box_check_update = false
-    config.vm.box_version = "20190115.0.0"
+    config.vm.box_version = "201812.27.0"
     config.vm.hostname = "roadiz-se-" + Time.now.strftime("%Y%m%d")
     #
     # Use forwarded ports with your local network

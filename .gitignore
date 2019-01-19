@@ -2,5 +2,6 @@
 ### Vagrant ###
 .vagrant/
 /package.box
+/package_no_solr.box
 /*.log
 /*.box

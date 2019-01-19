@@ -36,7 +36,7 @@ sudo dpkg --list \
     | xargs sudo apt-get -y purge;
 
 # Do not Delete X11 libraries
-# required for php7.2-gd
+# required for php7.3-gd
 sudo apt-get -y purge xauth libxmuu1 libxext6;
 
 # Delete obsolete networking
