@@ -12,9 +12,10 @@ SOLR_INSTALL_SCRIPT="/home/vagrant/install_solr_service.sh"
 SOLR_DOWNLOAD_URI="${SOLR_MIRROR}/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz"
 
 echo -e "\n--- Installing Open JDK 8 dependencies and repository ---\n"
+sudo add-apt-repository ppa:openjdk-r/ppa;
 sudo apt-get -qq update;
-LC_ALL=C.UTF-8 sudo apt-get install -qq -y openjdk-8-jdk openjdk-8-jre > /dev/null 2>&1;
-LC_ALL=C.UTF-8 sudo apt-mark manual openjdk-8-jdk openjdk-8-jre;
+sudo apt-get install -qq -y openjdk-11-jre;
+sudo apt-mark manual openjdk-11-jre openjdk-11-jre-headless java-common ca-certificates-java;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
