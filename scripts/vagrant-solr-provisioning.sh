@@ -11,21 +11,10 @@ SOLR_ARCHIVE="/home/vagrant/solr-${SOLR_VERSION}.tgz"
 SOLR_INSTALL_SCRIPT="/home/vagrant/install_solr_service.sh"
 SOLR_DOWNLOAD_URI="${SOLR_MIRROR}/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz"
 
-echo -e "\n--- Installing Oracle JDK 8 dependencies and repository ---\n"
-LC_ALL=C.UTF-8 sudo add-apt-repository -y ppa:webupd8team/java > /dev/null 2>&1;
-if [ $? -eq 0 ]; then
-   echo -e "\t--- OK\n"
-else
-   echo -e "${RED}\t!!! FAIL${NC}\n"
-   echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
-   exit 1;
-fi
-
-echo -e "\n--- Installing Oracle JDK 8 ---\n"
+echo -e "\n--- Installing Open JDK 8 dependencies and repository ---\n"
 sudo apt-get -qq update;
-# Accept silently Oracle license
-echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections > /dev/null 2>&1;
-sudo apt-get install -qq -y oracle-java8-installer;
+LC_ALL=C.UTF-8 sudo apt-get install -qq -y openjdk-8-jdk openjdk-8-jre > /dev/null 2>&1;
+LC_ALL=C.UTF-8 sudo apt-mark manual openjdk-8-jdk openjdk-8-jre;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
