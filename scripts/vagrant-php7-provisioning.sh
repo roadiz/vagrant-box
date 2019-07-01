@@ -103,7 +103,7 @@ echo -e "\n--- Install all php7.3 extensions ---\n"
 sudo apt-get -qq -y install php7.3 php7.3-cli php7.3-fpm php7.3-common php7.3-opcache php7.3-cli php7.3-mysql  \
                                php7.3-xml php7.3-gd php7.3-intl php7.3-imap php-mcrypt \
                                php7.3-curl php7.3-sqlite3 php7.3-mbstring php7.3-tidy \
-                               php7.3-xsl php-apcu php-apcu-bc php7.3-zip php-xdebug;
+                               php7.3-xsl php-apcu php-apcu-bc php7.3-zip php-xdebug jpegoptim pngquant;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
