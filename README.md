@@ -1,13 +1,13 @@
 # Vagrant box for Roadiz standard-edition development
 
 https://app.vagrantup.com/roadiz/boxes/standard-edition
-Based on `ubuntu/xenial64`.
+Based on `bento/ubuntu-16.04`.
 
 This box provides:
 
 - Nginx
-- php7.3-fpm
-- MariaDB, with 2 databases `roadiz` and `roadiz_test` using *utf8mb4* character set
+- php7.4-fpm
+- MariaDB 10.4, with 2 databases `roadiz` and `roadiz_test` using *utf8mb4* character set
 - Apache Solr, with one core `roadiz`
 - PhpMyAdmin
 - Mailcatcher

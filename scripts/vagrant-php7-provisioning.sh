@@ -9,8 +9,8 @@ DBNAME="roadiz"
 DBUSER="roadiz"
 DBPASSWD="roadiz"
 
-MARIADB_VERSION="10.3"
-VIRTUALBOX_VERSION="6.0.8"
+MARIADB_VERSION="10.4"
+# VIRTUALBOX_VERSION="6.0.8"
 
 echo -e "\n--- Okay, installing now... ---\n"
 sudo systemctl disable apt-daily.service;
@@ -99,11 +99,11 @@ else
    exit 1;
 fi
 
-echo -e "\n--- Install all php7.3 extensions ---\n"
-sudo apt-get -qq -y install php7.3 php7.3-cli php7.3-fpm php7.3-common php7.3-opcache php7.3-cli php7.3-mysql  \
-                               php7.3-xml php7.3-gd php7.3-intl php7.3-imap php-mcrypt \
-                               php7.3-curl php7.3-sqlite3 php7.3-mbstring php7.3-tidy \
-                               php7.3-xsl php-apcu php-apcu-bc php7.3-zip php-xdebug jpegoptim pngquant;
+echo -e "\n--- Install all php7.4 extensions ---\n"
+sudo apt-get -qq -y install php7.4 php7.4-cli php7.4-fpm php7.4-common php7.4-opcache php7.4-cli php7.4-mysql  \
+                               php7.4-xml php7.4-gd php7.4-intl php7.4-imap php-mcrypt \
+                               php7.4-curl php7.4-sqlite3 php7.4-mbstring php7.4-tidy \
+                               php7.4-xsl php-apcu php-apcu-bc php7.4-zip php-xdebug jpegoptim pngquant;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -128,13 +128,13 @@ else
 fi
 
 echo -e "\n--- We definitly need to see the PHP errors, turning them on ---\n"
-sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.3/fpm/php.ini
-sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.3/fpm/php.ini
-sudo sed -i "s/;realpath_cache_size = .*/realpath_cache_size = 4096k/" /etc/php/7.3/fpm/php.ini
-sudo sed -i "s/;realpath_cache_ttl = .*/realpath_cache_ttl = 600/" /etc/php/7.3/fpm/php.ini
+sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.4/fpm/php.ini
+sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.4/fpm/php.ini
+sudo sed -i "s/;realpath_cache_size = .*/realpath_cache_size = 4096k/" /etc/php/7.4/fpm/php.ini
+sudo sed -i "s/;realpath_cache_ttl = .*/realpath_cache_ttl = 600/" /etc/php/7.4/fpm/php.ini
 
 echo -e "\n--- Fix php-fpm startup PID path ---\n"
-sudo sed -i "s/\/run\/php\/php7.3-fpm.pid/\/run\/php7.3-fpm.pid/" /etc/php/7.3/fpm/php-fpm.conf
+sudo sed -i "s/\/run\/php\/php7.4-fpm.pid/\/run\/php7.4-fpm.pid/" /etc/php/7.4/fpm/php-fpm.conf
 
 echo -e "\n--- We definitly need to upload large files ---\n"
 sed -i "s/server_tokens off;/server_tokens off;\\n\\tclient_max_body_size 256M;/" /etc/nginx/nginx.conf
@@ -149,22 +149,22 @@ sudo cp /vagrant/scripts/vagrant/nginx-vhost.conf /etc/nginx/sites-available/def
 sudo cp /vagrant/scripts/vagrant/roadiz-nginx-include.conf /etc/nginx/snippets/roadiz.conf;
 
 echo -e "\n--- Configure PHP-FPM default pool ---\n"
-sudo rm /etc/php/7.3/fpm/pool.d/www.conf;
-sudo cp /vagrant/scripts/vagrant/php-pool.conf /etc/php/7.3/fpm/pool.d/www.conf;
-#sudo cp /vagrant/scripts/vagrant/xdebug.ini /etc/php/7.3/mods-available/xdebug.ini;
-sudo cp /vagrant/scripts/vagrant/logs.ini /etc/php/7.3/mods-available/logs.ini;
-sudo cp /vagrant/scripts/vagrant/opcache-recommended.ini /etc/php/7.3/mods-available/opcache-recommended.ini;
-sudo phpenmod -v 7.3 -s ALL opcache-recommended;
-sudo phpenmod -v 7.3 -s ALL logs;
-#sudo phpenmod -v 7.3 -s ALL xdebug;
+sudo rm /etc/php/7.4/fpm/pool.d/www.conf;
+sudo cp /vagrant/scripts/vagrant/php-pool.conf /etc/php/7.4/fpm/pool.d/www.conf;
+#sudo cp /vagrant/scripts/vagrant/xdebug.ini /etc/php/7.4/mods-available/xdebug.ini;
+sudo cp /vagrant/scripts/vagrant/logs.ini /etc/php/7.4/mods-available/logs.ini;
+sudo cp /vagrant/scripts/vagrant/opcache-recommended.ini /etc/php/7.4/mods-available/opcache-recommended.ini;
+sudo phpenmod -v 7.4 -s ALL opcache-recommended;
+sudo phpenmod -v 7.4 -s ALL logs;
+#sudo phpenmod -v 7.4 -s ALL xdebug;
 
 # XDebug for 7.3 is still in beta and makes SEGFAULT
-sudo phpdismod -v 7.3 -s ALL xdebug;
+sudo phpdismod -v 7.4 -s ALL xdebug;
 
 echo -e "\n--- Restarting Nginx and PHP servers ---\n"
 sudo usermod -aG www-data ${USER};
 sudo service nginx restart > /dev/null 2>&1;
-sudo service php7.3-fpm restart > /dev/null 2>&1;
+sudo service php7.4-fpm restart > /dev/null 2>&1;
 
 # Set envvars
 export DB_HOST=$DBHOST

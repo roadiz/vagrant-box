@@ -24,10 +24,10 @@ sudo update-rc.d cron defaults > /dev/null 2>&1;
 
 echo -e "\n--- Setup MailCatcher catchmail service as PHP sendmail_path ---\n";
 sudo sh -c "echo 'sendmail_path = /usr/bin/env $(which catchmail)' >> /etc/php/7.3/mods-available/mailcatcher.ini";
-sudo phpenmod -v 7.3 -s ALL mailcatcher;
+sudo phpenmod -v 7.4 -s ALL mailcatcher;
 
 echo -e "\n--- Restart PHP service ---\n";
-sudo service php7.3-fpm restart > /dev/null 2>&1;
+sudo service php7.4-fpm restart > /dev/null 2>&1;
 
 echo -e "\n--- Run MailCatcher  ---\n";
 /usr/bin/env $(which mailcatcher) --ip=0.0.0.0 > /dev/null 2>&1;
