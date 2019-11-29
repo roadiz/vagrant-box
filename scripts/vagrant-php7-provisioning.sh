@@ -10,22 +10,12 @@ DBUSER="roadiz"
 DBPASSWD="roadiz"
 
 MARIADB_VERSION="10.4"
-# VIRTUALBOX_VERSION="6.0.8"
 
 echo -e "\n--- Okay, installing now... ---\n"
 sudo systemctl disable apt-daily.service;
 sudo systemctl disable apt-daily.timer;
 sudo apt-get -qq update;
 sudo apt-get -qq -y install linux-headers-$(uname -r) build-essential dkms zsh curl software-properties-common;
-
-# echo -e "\n---Install VBoxGuestAdditions ---\n"
-# wget http://download.virtualbox.org/virtualbox/${VIRTUALBOX_VERSION}/VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso;
-# sudo mkdir /media/VBoxGuestAdditions;
-# sudo mount -o loop,ro VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso /media/VBoxGuestAdditions;
-# sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run --nox11 -- --force;
-# rm VBoxGuestAdditions_${VIRTUALBOX_VERSION}.iso;
-# sudo umount /media/VBoxGuestAdditions;
-# sudo rmdir /media/VBoxGuestAdditions;
 
 echo -e "\n---Install locales ---\n"
 sudo locale-gen en_GB.UTF-8 \
@@ -51,9 +41,9 @@ sudo chown -R vagrant:vagrant /home/vagrant;
 echo -e "\n--- Install base packages ---\n"
 # Signing key for MariaDB
 # @see https://mariadb.com/kb/en/mariadb/installing-mariadb-deb-files/
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 
-echo -e "\n--- Add some repos to update our distro ---\n"
+echo -e "\n--- Add PHP repository ---\n"
 LC_ALL=C.UTF-8 sudo add-apt-repository ppa:ondrej/php > /dev/null 2>&1;
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
@@ -62,7 +52,8 @@ else
    echo -e "${RED}\t!!! Please destroy your vagrant and provision again.${NC}\n"
    exit 1;
 fi
-LC_ALL=C.UTF-8 sudo add-apt-repository "deb [arch=amd64,i386,ppc64el] http://ftp.igh.cnrs.fr/pub/mariadb/repo/${MARIADB_VERSION}/ubuntu xenial main" > /dev/null 2>&1;
+echo -e "\n--- Add MariaDB ${MARIADB_VERSION} repository ---\n"
+LC_ALL=C.UTF-8 sudo add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/${MARIADB_VERSION}/ubuntu bionic main"
 if [ $? -eq 0 ]; then
    echo -e "\t--- OK\n"
 else
@@ -72,6 +63,7 @@ else
 fi
 
 # Use latest nginx for HTTP/2
+echo -e "\n--- Add Nginx repository ---\n"
 sudo cp -a /vagrant/scripts/vagrant/sources.list.d/nginx.list /etc/apt/sources.list.d/nginx.list;
 wget -q -O- http://nginx.org/keys/nginx_signing.key | sudo apt-key add - > /dev/null 2>&1;
 if [ $? -eq 0 ]; then
@@ -101,7 +93,7 @@ fi
 
 echo -e "\n--- Install all php7.4 extensions ---\n"
 sudo apt-get -qq -y install php7.4 php7.4-cli php7.4-fpm php7.4-common php7.4-opcache php7.4-cli php7.4-mysql  \
-                               php7.4-xml php7.4-gd php7.4-intl php7.4-imap php-mcrypt \
+                               php7.4-xml php7.4-gd php7.4-intl php7.4-imap \
                                php7.4-curl php7.4-sqlite3 php7.4-mbstring php7.4-tidy \
                                php7.4-xsl php-apcu php-apcu-bc php7.4-zip php-xdebug jpegoptim pngquant;
 if [ $? -eq 0 ]; then
@@ -158,7 +150,7 @@ sudo phpenmod -v 7.4 -s ALL opcache-recommended;
 sudo phpenmod -v 7.4 -s ALL logs;
 #sudo phpenmod -v 7.4 -s ALL xdebug;
 
-# XDebug for 7.3 is still in beta and makes SEGFAULT
+# XDebug for 7.4 is still in beta and makes SEGFAULT
 sudo phpdismod -v 7.4 -s ALL xdebug;
 
 echo -e "\n--- Restarting Nginx and PHP servers ---\n"
